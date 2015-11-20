@@ -100,4 +100,14 @@ class Oss_Sitename_Public {
 
 	}
 
+	/**
+	 * Register custom taxonomies with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_taxonomies() {
+
+		$taxonomies = new Oss_Sitename_Taxonomies();
+		$taxonomies->register_taxonomies( $taxonomies->define_taxonomies() );
+	}
 }
