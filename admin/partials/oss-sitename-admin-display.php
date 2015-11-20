@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Provide a admin area view for the plugin
+ * Provide an admin area view for the plugin
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
@@ -14,3 +14,8 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
+<div class="wrap">
+	<?php screen_icon(); ?>
+	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+</div>

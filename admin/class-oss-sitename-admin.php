@@ -100,4 +100,108 @@ class Oss_Sitename_Admin {
 
 	}
 
+	/*------------------------------------------------------------------------
+	SITE SPECIFIC OPTIONS SCREEN */
+
+	/**
+	 * Slug of the plugin screen.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      string
+	 */
+	protected $plugin_screen_hook_suffix = null;
+
+	/**
+	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_plugin_admin_menu() {
+
+		/*
+		 * Add a settings page for this plugin to the Settings menu.
+		 *
+		 */
+
+	    $page_title = __( 'Site Specific Settings', $this->plugin_name );
+	    $menu_title = __( 'Site Specific', $this->plugin_name );
+	    $capability = 'manage_options';
+	    $menu_slug = $this->plugin_name;
+	    $function = array( $this, 'display_plugin_admin_page' );
+
+		$this->plugin_screen_hook_suffix = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_action_links( $links ) {
+
+		return array_merge(
+			array(
+				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', $this->plugin_name ) . '</a>'
+			),
+			$links
+		);
+
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_plugin_admin_page() {
+
+		if ( !current_user_can( 'manage_options' ) )  { 
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		$this->admin_switch();
+	}
+
+	/*------------------------------------------------------------------------
+	SWITCH */
+
+	/**
+	 * Main process switch.
+	 *
+	 * @since    1.0.0
+	 */
+	public function admin_switch() {
+
+		$action = '';
+
+		if(isset($_GET["action"]))
+			$action = $_GET["action"];
+
+		if(isset($_POST["action"]))
+			$action = $_POST["action"];
+
+		switch($action) {
+			case 'generic':
+				$this->do_action_default( $action );
+			break;	
+			default:
+				$this->do_action_default( $action );
+			break;	
+		}
+	}
+
+	/*------------------------------------------------------------------------
+	DEFAULT */
+
+	/**
+	 * Display the default page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function do_action_default( $action ) {
+
+		include_once( 'partials/oss-sitename-admin-display.php' );
+	}
+
 }
