@@ -8,8 +8,8 @@
  * @link       http://grit-oyster.co.uk/
  * @since      1.0.0
  *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/public/partials
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/public/partials
  */
 ?>
 

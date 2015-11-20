@@ -10,10 +10,10 @@
  *
  * @link              http://grit-oyster.co.uk/
  * @since             1.0.0
- * @package           Oss_Sitename
+ * @package           OSS_Sitename
  *
  * @wordpress-plugin
- * Plugin Name:       Site Name
+ * Plugin Name:       Sitename
  * Plugin URI:        http://grit-oyster.co.uk/plugins/
  * Description:       A template plugin to be used as a base to create site specific plugins. Requires Oystershell Core plugin.
  * Version:           1.0.0
@@ -68,7 +68,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-oss-sitename.php';
  */
 function run_oss_sitename() {
 
-	$plugin = new Oss_Sitename();
+	$plugin = new OSS_Sitename();
 	$plugin->run();
 
 }

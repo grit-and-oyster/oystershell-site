@@ -1,27 +1,17 @@
 <?php
 
 /**
- * Register all actions and filters for the plugin
- *
- * @link       http://grit-oyster.co.uk/
- * @since      1.0.0
- *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
- */
-
-/**
  * Register all actions and filters for the plugin.
  *
  * Maintain a list of all hooks that are registered throughout
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename_Loader {
+class OSS_Sitename_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

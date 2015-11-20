@@ -6,11 +6,11 @@
  * This class defines and adds custom taxonomies.
  *
  * @since      1.0.0
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename_Taxonomies {
+class OSS_Sitename_Taxonomies {
 
 	/**
 	 * Registers the custom taxonomies with WordPress

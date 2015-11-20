@@ -1,30 +1,17 @@
 <?php
 
 /**
- * Define the internationalization functionality
- *
- * Loads and defines the internationalization files for this plugin
- * so that it is ready for translation.
- *
- * @link       http://grit-oyster.co.uk/
- * @since      1.0.0
- *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
- */
-
-/**
  * Define the internationalization functionality.
  *
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename_i18n {
+class OSS_Sitename_i18n {
 
 	/**
 	 * The domain specified for this plugin.

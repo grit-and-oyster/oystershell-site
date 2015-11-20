@@ -22,7 +22,7 @@
  * @link       http://grit-oyster.co.uk/
  * @since      1.0.0
  *
- * @package    Oss_Sitename
+ * @package    OSS_Sitename
  */
 
 // If uninstall not called from WordPress, then exit.

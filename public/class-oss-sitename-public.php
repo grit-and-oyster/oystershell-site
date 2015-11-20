@@ -3,24 +3,14 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://grit-oyster.co.uk/
- * @since      1.0.0
- *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/public
- */
-
-/**
- * The public-facing functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/public
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/public
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename_Public {
+class OSS_Sitename_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -107,7 +97,7 @@ class Oss_Sitename_Public {
 	 */
 	public function register_taxonomies() {
 
-		$taxonomies = new Oss_Sitename_Taxonomies();
+		$taxonomies = new OSS_Sitename_Taxonomies();
 		$taxonomies->register_taxonomies( $taxonomies->define_taxonomies() );
 	}
 }

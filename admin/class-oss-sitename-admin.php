@@ -3,24 +3,14 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://grit-oyster.co.uk/
- * @since      1.0.0
- *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/admin
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/admin
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename_Admin {
+class OSS_Sitename_Admin {
 
 	/**
 	 * The ID of this plugin.

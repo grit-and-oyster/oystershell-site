@@ -1,19 +1,6 @@
 <?php
 
 /**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       http://grit-oyster.co.uk/
- * @since      1.0.0
- *
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
- */
-
-/**
  * The core plugin class.
  *
  * This is used to define internationalization, admin-specific hooks, and
@@ -23,11 +10,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Oss_Sitename
- * @subpackage Oss_Sitename/includes
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
  * @author     Grit & Oyster <code@grit-oyster.co.uk>
  */
-class Oss_Sitename {
+class OSS_Sitename {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -124,7 +111,7 @@ class Oss_Sitename {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-oss-sitename-public.php';
 
-		$this->loader = new Oss_Sitename_Loader();
+		$this->loader = new OSS_Sitename_Loader();
 
 	}
 
@@ -139,7 +126,7 @@ class Oss_Sitename {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Oss_Sitename_i18n();
+		$plugin_i18n = new OSS_Sitename_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
@@ -155,7 +142,7 @@ class Oss_Sitename {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Oss_Sitename_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new OSS_Sitename_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -176,7 +163,7 @@ class Oss_Sitename {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Oss_Sitename_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new OSS_Sitename_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
