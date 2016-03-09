@@ -91,6 +91,17 @@ class OSS_Sitename_Public {
 	}
 
 	/**
+	 * Register custom post types with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_post_types() {
+
+		$cpt = new OSS_Sitename_Cpt_Name();
+		$cpt->create( $cpt->name(), $cpt->labels(), $cpt->config());
+	}
+
+	/**
 	 * Register custom taxonomies with WordPress.
 	 *
 	 * @since    1.0.0
@@ -100,4 +111,51 @@ class OSS_Sitename_Public {
 		$taxonomies = new OSS_Sitename_Taxonomies();
 		$taxonomies->register_taxonomies( $taxonomies->define_taxonomies() );
 	}
+
+	/**
+	 * Check that Posts2Posts plugin is active.
+	 *
+	 * @since    1.0.0
+	 */
+	public function check_for_p2p_plugin() {
+
+		$active = true;
+		if( !function_exists( '_p2p_init' ) ) {
+			 if ( current_user_can( 'activate_plugins' ) ) {
+				add_action( 'admin_notices', array( $this, 'p2p_plugin_admin_notice' ) );
+			}
+			$active = false;
+		}
+
+		define( 'OSS_P2P_ACTIVE', $active );
+	}
+
+	/**
+	 * Check that Posts2Posts plugin is active.
+	 *
+	 * @since    1.0.0
+	 */
+	public function p2p_plugin_admin_notice() {
+
+		 echo '<div class="updated"><p><strong>Warning:</strong> Relationships between posts have not been registered as Post2Posts plugin not active.</p></div>';
+
+	}
+
+
+	/**
+	 * Register post to post relationships with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_relationships() {
+
+		if ( true == OSS_P2P_ACTIVE ) {
+
+			$relationships = new OSS_Sitename_Relationships();
+			$relationships->register_relationships();
+		}
+
+
+	}
+
 }

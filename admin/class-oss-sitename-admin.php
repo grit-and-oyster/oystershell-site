@@ -153,6 +153,17 @@ class OSS_Sitename_Admin {
 		$this->admin_switch();
 	}
 
+	/**
+	 * Register custom metaboxes with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_metaboxes() {
+
+		$metaboxes = new OSS_Sitename_Metaboxes();
+		$metaboxes->register_admin_metaboxes();
+	}
+
 	/*------------------------------------------------------------------------
 	SWITCH */
 

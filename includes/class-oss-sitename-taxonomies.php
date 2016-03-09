@@ -34,8 +34,26 @@ class OSS_Sitename_Taxonomies {
 					'display_tax_base' => true,
 					// Allow hierarchical URLs
 					'display_tax_hrach' => false,
+					// Display terms in post class
+					'display_post_class' => false,
 					// Object type (post, pages, custom post types)
 					'object' => 'post',
+					),
+				1 => array(
+					'tax_name' => 'oss_custom_post',
+					'tax_label_singular' => 'Custom Post Tag',
+					'tax_label_plural' => 'Custom Post Tags',
+					// Hierarchical taxonomy (like categories)
+					'tax_harch' => false,
+					'tax_slug' => 'custom-post',
+					// Display the category base in URLs
+					'display_tax_base' => true,
+					// Allow hierarchical URLs
+					'display_tax_hrach' => false,
+					// Display terms in post class
+					'display_post_class' => true,
+					// Object type (post, pages, custom post types)
+					'object' => 'oss_book',
 					),
 				);
 
@@ -96,6 +114,36 @@ class OSS_Sitename_Taxonomies {
 			  );
 			register_taxonomy($ctax['tax_name'], null, $args );
 			register_taxonomy_for_object_type( $ctax['tax_name'], $ctax['object'] );
+			add_filter( 'post_class', array( $this, 'taxonomy_post_class' ) );
 		}
 	}
+
+	/**
+	 * Adds terms from a custom taxonomy to post_class
+	 */
+	function taxonomy_post_class( $classes ) {
+		global $post;
+
+		$custom_tax = $this->define_taxonomies();
+
+		foreach ( $custom_tax as $key => $ctax ) {
+
+			if ( true == $ctax['display_post_class'] ) {
+
+				$taxonomy = $ctax['tax_name'];
+
+			    $terms = get_the_terms( (int) $post->ID, $taxonomy );
+			    if( !empty( $terms ) ) {
+			        foreach( (array) $terms as $order => $term ) {
+			            if( !in_array( $term->slug, $classes ) ) {
+			                $classes[] = $term->slug;
+			            }
+			        }
+			    }
+			}
+		}
+	    return $classes;
+
+	} // end taxonomy_post_class
+
 }

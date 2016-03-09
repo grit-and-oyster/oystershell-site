@@ -96,9 +96,30 @@ class OSS_Sitename {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-i18n.php';
 
 		/**
+		 * Load the CMB2 library
+		 * CMB2 is a developer's toolkit for building metaboxes, custom fields, and forms for WordPress.
+		 */
+		require_once OS_LIB_DIR . '/cmb2/init.php';
+
+		/**
+		 * The class responsible for defining a custom post type
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-cpt-name.php';
+
+		/**
 		 * The class responsible for defining custom taxonomies
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-taxonomies.php';
+
+		/**
+		 * The class responsible for defining custom metaboxes
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-metaboxes.php';
+
+		/**
+		 * The class responsible for defining post relationships
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-relationships.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -152,6 +173,8 @@ class OSS_Sitename {
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 
+		$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_metaboxes' );
+
 	}
 
 	/**
@@ -167,9 +190,13 @@ class OSS_Sitename {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		// Register custom post types.
+		$this->loader->add_action( 'init', $plugin_public, 'register_post_types' );
 		// Register custom taxonomies.
 		$this->loader->add_action( 'init', $plugin_public, 'register_taxonomies' );
-
+		// Register post relationships.
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'check_for_p2p_plugin' );
+		$this->loader->add_action( 'p2p_init', $plugin_public, 'register_relationships' );
 	}
 
 	/**
