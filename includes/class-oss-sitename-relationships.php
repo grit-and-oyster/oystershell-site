@@ -3,7 +3,7 @@
 /**
  * Adds relationships between posts.
  *
- * This class defines and adds relationships between post types..
+ * This class defines and adds relationships between post types.
  *
  * @since      1.0.0
  * @package    OSS_Sitename

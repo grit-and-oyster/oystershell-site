@@ -47,7 +47,7 @@ class OSS_Sitename_Cpt_Name {
 	    $labels = array(
 	        'name'                  => _x( $label_general, 'Post type general name', 'textdomain' ),
 	        'singular_name'         => _x( $label_singular, 'Post type singular name', 'textdomain' ),
-	        'menu_name'             => _x( 'Books', 'Admin Menu text', 'textdomain' ),
+	        'menu_name'             => _x( $label_general, 'Admin Menu text', 'textdomain' ),
 	        'name_admin_bar'        => _x( $label_singular, 'Add New on Toolbar', 'textdomain' ),
 	        'add_new'               => __( 'Add New', 'textdomain' ),
 	        'add_new_item'          => __( 'Add New ' . $label_singular, 'textdomain' ),
