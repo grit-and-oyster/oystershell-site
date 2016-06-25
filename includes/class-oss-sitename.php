@@ -59,6 +59,7 @@ class OSS_Sitename {
 		$this->version = '1.0.0';
 
 		$this->load_dependencies();
+		$this->load_libraries();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
@@ -96,12 +97,6 @@ class OSS_Sitename {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-i18n.php';
 
 		/**
-		 * Load the CMB2 library
-		 * CMB2 is a developer's toolkit for building metaboxes, custom fields, and forms for WordPress.
-		 */
-		require_once OS_LIB_DIR . '/cmb2/init.php';
-
-		/**
 		 * The class responsible for defining a custom post type
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-cpt-name.php';
@@ -133,6 +128,22 @@ class OSS_Sitename {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-oss-sitename-public.php';
 
 		$this->loader = new OSS_Sitename_Loader();
+
+	}
+
+	/**
+	 * Load the required Oystershell Core libraries for this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_libraries() {
+
+		/**
+		 * Load the CMB2 library
+		 * CMB2 is a developer's toolkit for building metaboxes, custom fields, and forms for WordPress.
+		 */
+		add_action( 'plugins_loaded', 'osc_load_library_cmb2', 0 );
 
 	}
 
