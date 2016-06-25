@@ -227,7 +227,13 @@ class OSS_Sitename_Taxonomies {
 			  );
 
 			register_taxonomy($ctax['tax_name'], null, $args );
-			register_taxonomy_for_object_type( $ctax['tax_name'], $ctax['object'] );
+			if (is_array( $ctax['object'] )) {
+				foreach ( $ctax['object'] as $object ) {
+					register_taxonomy_for_object_type( $ctax['tax_name'], $object );
+				}
+			} else {
+				register_taxonomy_for_object_type( $ctax['tax_name'], $ctax['object'] );
+			}
 			add_filter( 'post_class', array( $this, 'taxonomy_post_class' ) );
 		}
 	}
