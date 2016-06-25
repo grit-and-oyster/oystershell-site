@@ -1,10 +1,17 @@
 <?php
 
 /**
- * The admin-specific functionality of the plugin.
+ * The file that contains admin-specific functionality of the plugin
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/admin
+ */
+
+/**
+ * The class that defines admin-specific functionality of the plugin.
  *
  * @package    OSS_Sitename
  * @subpackage OSS_Sitename/admin
@@ -31,67 +38,29 @@ class OSS_Sitename_Admin {
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * The field name prefix for this plugin.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @access   private
+	 * @var      string    $prefix    The field name prefix for this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	private $prefix;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 	1.0.0
+	 * @param   string    $plugin_name       The name of this plugin.
+	 * @param   string    $version    The version of this plugin.
+	 * @param 	string    $prefix    The field name prefix for this plugin.
+	 */
+	public function __construct( $plugin_name, $version, $prefix ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->prefix = $prefix;
 
 	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Oss_Sitename_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Oss_Sitename_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/oss-sitename-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Oss_Sitename_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Oss_Sitename_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/oss-sitename-admin.js', array( 'jquery' ), $this->version, false );
-
-	}
-
-	/*------------------------------------------------------------------------
-	SITE SPECIFIC OPTIONS SCREEN */
 
 	/**
 	 * Slug of the plugin screen.
@@ -103,16 +72,22 @@ class OSS_Sitename_Admin {
 	protected $plugin_screen_hook_suffix = null;
 
 	/**
-	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
+	 * Options screen tabs.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @var      string
+	 */
+	protected $tabs = array( 'general' );
+
+	/**
+	 * Register the administration menu for this plugin into the WordPress settings menu.
+	 *
+	 * Hooked to 'admin_menu' action.
 	 *
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
-
-		/*
-		 * Add a settings page for this plugin to the Settings menu.
-		 *
-		 */
 
 	    $page_title = __( 'Site Specific Settings', $this->plugin_name );
 	    $menu_title = __( 'Site Specific', $this->plugin_name );
@@ -121,10 +96,15 @@ class OSS_Sitename_Admin {
 	    $function = array( $this, 'display_plugin_admin_page' );
 
 		$this->plugin_screen_hook_suffix = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
+
+		// Include CMB CSS in the head
+		add_action( "admin_print_styles-{$this->plugin_screen_hook_suffix}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
 	/**
 	 * Add settings action link to the plugins page.
+	 *
+	 * Hooked to 'plugin_action_links_[plugin-name]' filter.
 	 *
 	 * @since    1.0.0
 	 */
@@ -140,6 +120,38 @@ class OSS_Sitename_Admin {
 	}
 
 	/**
+	 * Set up plugin settings.
+	 *
+	 * Hooked to 'admin_init' action.
+	 *
+	 * @since    1.0.0
+	 */
+	public function initialize_plugin_options() {
+
+		foreach ($this->tabs as $tab) {
+
+			$key = $this->prefix . 'options_' . $tab;
+			register_setting( $key, $key );
+		}
+	}
+
+	/**
+	 * Register custom metaboxes with WordPress.
+	 *
+	 * Hooked to 'cmb2_admin_init' action.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_metaboxes() {
+
+		$metaboxes = new OSS_Sitename_Metaboxes( $this->prefix );
+		$metaboxes->register_admin_metaboxes();
+
+		//Add additional notices for CMB2 metaboxes
+		$this->hook_save_notices();		
+	}
+
+	/**
 	 * Render the settings page for this plugin.
 	 *
 	 * @since    1.0.0
@@ -151,17 +163,6 @@ class OSS_Sitename_Admin {
 		}
 
 		$this->admin_switch();
-	}
-
-	/**
-	 * Register custom metaboxes with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function register_metaboxes() {
-
-		$metaboxes = new OSS_Sitename_Metaboxes();
-		$metaboxes->register_admin_metaboxes();
 	}
 
 	/*------------------------------------------------------------------------
@@ -183,7 +184,7 @@ class OSS_Sitename_Admin {
 			$action = $_POST["action"];
 
 		switch($action) {
-			case 'generic':
+			case 'general':
 				$this->do_action_default( $action );
 			break;	
 			default:
@@ -202,7 +203,125 @@ class OSS_Sitename_Admin {
 	 */
 	public function do_action_default( $action ) {
 
+		$key = $this->prefix . 'options_' . $action;
+		$metabox_id = $key . '_metaboxes';
+
 		include_once( 'partials/oss-sitename-admin-display.php' );
 	}
 
+	/*------------------------------------------------------------------------
+	DISPLAY FUNCTIONS */
+
+	/**
+	 * Display tabs.
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_tabs( $action ) {
+
+		if ($action == '') {
+			$action = 'general';
+		}
+
+		$output = '<h2 class="nav-tab-wrapper">';
+
+		foreach ($this->tabs as $tab) {
+
+			$link = admin_url( 'options-general.php?page=' . $this->plugin_name . '&action=' . $tab );
+			$active = '';
+			if ($action == $tab) {
+				$active = 'nav-tab-active';
+			}
+			$output = $output . '<a href="' . $link . '" class="nav-tab ' . $active . '">' . __( ucfirst($tab), 'tekdigital' ) . '</a>';
+		}
+
+		$output = $output . '</h2>';
+
+		echo $output;
+	}
+
+	/**
+	 * Hook in our save notices for options pages
+	 *
+	 * @since    1.0.0
+	 */
+	public function hook_save_notices() {
+	
+		foreach ($this->tabs as $tab) {
+
+			$key = $this->prefix . 'options_' . $tab;
+			$metabox_id = $key . '_metaboxes';
+			add_action( "cmb2_save_options-page_fields_{$metabox_id}", array( $this, 'settings_notices' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Register settings notices for display
+	 *
+	 * @since  0.1.0
+	 * @param  int   $object_id Option key
+	 * @param  array $updated   Array of updated fields
+	 * @return void
+	 */
+	public function settings_notices( $object_id, $updated ) {
+	
+		foreach ($this->tabs as $tab) {
+
+			$key = $this->prefix . 'options_' . $tab;
+
+			if ( $object_id !== $key || empty( $updated ) ) {
+				// do nothing
+
+			} else {
+				add_settings_error( $key . '-notices', '', __( 'Settings updated.', 'tekdigital' ), 'updated' );
+				settings_errors( $key . '-notices' );				
+			}
+		}
+	}
+
+	/**
+	 * Register the stylesheets for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_styles() {
+
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Plugin_Name_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
+
+	}
+
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_scripts() {
+
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Plugin_Name_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-admin.js', array( 'jquery' ), $this->version, false );
+
+	}
 }

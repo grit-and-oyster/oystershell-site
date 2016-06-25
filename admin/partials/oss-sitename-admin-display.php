@@ -15,7 +15,8 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-<div class="wrap">
-	<?php screen_icon(); ?>
+<div class="wrap wrap cmb2-options-page <?php echo $key; ?>">
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+	<?php $this->display_tabs($action); ?>
+	<?php cmb2_metabox_form( $metabox_id, $key ); ?>
 </div>

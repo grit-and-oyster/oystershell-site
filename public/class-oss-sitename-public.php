@@ -31,17 +31,128 @@ class OSS_Sitename_Public {
 	private $version;
 
 	/**
+	 * The field name prefix for this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $prefix    The field name prefix for this plugin.
+	 */
+	private $prefix;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $prefix ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->prefix = $prefix;
 
+	}
+
+	/**
+	 * Register custom post types with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_post_types() {
+
+		$cpt = new OSS_Sitename_Cpt_Name();
+		$cpt->create( $cpt->name(), $cpt->labels(), $cpt->config());
+	}
+
+	/**
+	 * Register custom taxonomies with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_taxonomies() {
+
+		$taxonomies = new OSS_Sitename_Taxonomies();
+		$taxonomies->register_taxonomies( $taxonomies->define_taxonomies() );
+	}
+
+	/**
+	 * Check that Posts2Posts plugin is active.
+	 *
+	 * @since    1.0.0
+	 */
+	public function check_for_p2p_plugin() {
+
+		$active = true;
+		if( !function_exists( '_p2p_init' ) ) {
+			 if ( current_user_can( 'activate_plugins' ) ) {
+				add_action( 'admin_notices', array( $this, 'p2p_plugin_admin_notice' ) );
+			}
+			$active = false;
+		}
+
+		define( 'OSS_P2P_ACTIVE', $active );
+	}
+
+	/**
+	 * Error notice if Posts2Posts plugin is not active.
+	 *
+	 * @since    1.0.0
+	 */
+	public function p2p_plugin_admin_notice() {
+
+		 echo '<div class="updated"><p><strong>Warning:</strong> Relationships between posts have not been registered as Post2Posts plugin not active.</p></div>';
+
+	}
+
+	/**
+	 * Register post to post relationships with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_relationships() {
+
+		if ( true == OSS_P2P_ACTIVE ) {
+
+			$relationships = new OSS_Sitename_Relationships();
+			$relationships->register_relationships();
+		}
+	}
+
+	/**
+	 * Register custom metaboxes with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_metaboxes() {
+
+		$metaboxes = new OSS_Sitename_Metaboxes( $this->prefix );
+		$metaboxes->register_public_metaboxes();
+	}
+
+	/**
+	 * Register shortcodes with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function create_shortcodes() {
+
+		//add_shortcode( $args ) );
+
+	}
+
+	/**
+	 * Register page template specific actions to available hooks
+	 *
+	 * @since    1.0.0
+	 */
+	public function init_page_templates() {
+
+		if ( is_page_template('page-[template].php') ) {
+
+			//add_action( 'wp_enqueue_scripts', 'page_template_function' );
+
+		}
 	}
 
 	/**
@@ -90,72 +201,5 @@ class OSS_Sitename_Public {
 
 	}
 
-	/**
-	 * Register custom post types with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function register_post_types() {
-
-		$cpt = new OSS_Sitename_Cpt_Name();
-		$cpt->create( $cpt->name(), $cpt->labels(), $cpt->config());
-	}
-
-	/**
-	 * Register custom taxonomies with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function register_taxonomies() {
-
-		$taxonomies = new OSS_Sitename_Taxonomies();
-		$taxonomies->register_taxonomies( $taxonomies->define_taxonomies() );
-	}
-
-	/**
-	 * Check that Posts2Posts plugin is active.
-	 *
-	 * @since    1.0.0
-	 */
-	public function check_for_p2p_plugin() {
-
-		$active = true;
-		if( !function_exists( '_p2p_init' ) ) {
-			 if ( current_user_can( 'activate_plugins' ) ) {
-				add_action( 'admin_notices', array( $this, 'p2p_plugin_admin_notice' ) );
-			}
-			$active = false;
-		}
-
-		define( 'OSS_P2P_ACTIVE', $active );
-	}
-
-	/**
-	 * Check that Posts2Posts plugin is active.
-	 *
-	 * @since    1.0.0
-	 */
-	public function p2p_plugin_admin_notice() {
-
-		 echo '<div class="updated"><p><strong>Warning:</strong> Relationships between posts have not been registered as Post2Posts plugin not active.</p></div>';
-
-	}
-
-
-	/**
-	 * Register post to post relationships with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function register_relationships() {
-
-		if ( true == OSS_P2P_ACTIVE ) {
-
-			$relationships = new OSS_Sitename_Relationships();
-			$relationships->register_relationships();
-		}
-
-
-	}
 
 }

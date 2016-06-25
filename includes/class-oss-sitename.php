@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * The file that defines the core plugin class
+ *
+ * A class definition that includes attributes and functions used across both the
+ * public-facing side of the site and the admin area.
+ *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
  * The core plugin class.
  *
  * This is used to define internationalization, admin-specific hooks, and
@@ -45,6 +58,15 @@ class OSS_Sitename {
 	protected $version;
 
 	/**
+	 * The prefix for field names to be used throughout the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $prefix    The prefix for field names to be used throughout the plugin.
+	 */
+	protected $prefix;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -57,6 +79,7 @@ class OSS_Sitename {
 
 		$this->plugin_name = 'oss-sitename';
 		$this->version = '1.0.0';
+		$this->prefix = '_sitename_';
 
 		$this->load_dependencies();
 		$this->load_libraries();
@@ -174,18 +197,23 @@ class OSS_Sitename {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new OSS_Sitename_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new OSS_Sitename_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_prefix() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		// Add the options page and menu item.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 
+		// Initialize the settings options.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'initialize_plugin_options' );
+
+		// Register custom metaboxes used in the admin.
 		$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_metaboxes' );
 
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 	}
 
 	/**
@@ -197,17 +225,29 @@ class OSS_Sitename {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new OSS_Sitename_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new OSS_Sitename_Public( $this->get_plugin_name(), $this->get_version(), $this->get_prefix() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		// Register custom post types.
 		$this->loader->add_action( 'init', $plugin_public, 'register_post_types' );
+
 		// Register custom taxonomies.
 		$this->loader->add_action( 'init', $plugin_public, 'register_taxonomies' );
+
 		// Register post relationships.
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'check_for_p2p_plugin' );
 		$this->loader->add_action( 'p2p_init', $plugin_public, 'register_relationships' );
+
+		// Register public facing custom metaboxes.
+		$this->loader->add_action( 'cmb2_init', $plugin_public, 'register_metaboxes' );
+
+		// Register shortcodes.
+		$this->loader->add_action( 'init', $plugin_public, 'create_shortcodes' );
+
+		// Define theme template specific hooks.
+		$this->loader->add_action( 'wp', $plugin_public, 'init_page_templates' );
+
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 	}
 
 	/**
@@ -248,6 +288,16 @@ class OSS_Sitename {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the prefix for field names.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The prefix for field names.
+	 */
+	public function get_prefix() {
+		return $this->prefix;
 	}
 
 }
