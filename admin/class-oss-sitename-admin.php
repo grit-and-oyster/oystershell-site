@@ -89,6 +89,11 @@ class OSS_Sitename_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 
+		/*
+		 * Add a settings page for this plugin to the Settings menu.
+		 *
+		 */
+
 	    $page_title = __( 'Site Specific Settings', 'plugin-text-domain' );
 	    $menu_title = __( 'Site Specific', 'plugin-text-domain' );
 	    $capability = 'manage_options';
@@ -97,8 +102,18 @@ class OSS_Sitename_Admin {
 
 		$this->plugin_screen_hook_suffix = add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function );
 
+		/*
+		 * Alternative: Add a page for this plugin to the main Admin menu.
+		 *
+		 */
+	    // $icon_url = '';
+	    // $position = 40;
+
+		// $this->plugin_screen_hook_suffix = add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+
 		// Include CMB CSS in the head
 		add_action( "admin_print_styles-{$this->plugin_screen_hook_suffix}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
+
 	}
 
 	/**
@@ -188,7 +203,7 @@ class OSS_Sitename_Admin {
 				$this->do_action_default( $action );
 			break;	
 			default:
-				$this->do_action_default( $action );
+				$this->do_action_default( 'general' );
 			break;	
 		}
 	}

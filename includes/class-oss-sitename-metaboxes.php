@@ -43,9 +43,10 @@ class OSS_Sitename_Metaboxes {
 
 	}
 
-
 	/**
-	 * 
+	 * Register metaboxes for the WordPress admin.
+	 *
+	 * @since 	1.0.0
 	 */
 	function register_admin_metaboxes() {
 
@@ -57,17 +58,23 @@ class OSS_Sitename_Metaboxes {
 	}
 
 	/**
-	 * 
+	 * Register metaboxes for the front end.
+	 *
+	 * @since 	1.0.0
 	 */
 	function register_public_metaboxes() {
 
 	}
 
+	/**
+	 * Specify the demonstration metaboxes.
+	 *
+	 * @since 	1.0.0
+	 * @param 	string    $prefix    The field name prefix for this plugin.
+	 * @param 	array    $post_types   The post types that use these metaboxes.
+	 */
 	function add_cpt_metaboxes( $prefix, $post_types ) {
 
-		/**
-		 * Demo metabox
-		 */
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
 			'title'         => __( 'Test Metabox', 'plugin-text-domain' ),
@@ -88,7 +95,12 @@ class OSS_Sitename_Metaboxes {
 
 	}
 
-
+	/**
+	 * Specify the metaboxes for the General tab on the settings page.
+	 *
+	 * @since 	1.0.0
+	 * @param 	string    $prefix    The field name prefix for this plugin.
+	 */
 	function add_options_general_metaboxes( $prefix ) {
 
 		$key =  $prefix . 'options_general';
@@ -120,6 +132,13 @@ class OSS_Sitename_Metaboxes {
 
 	}
 
+	/**
+	 * Specify the metaboxes for users.
+	 *
+	 * @since 	1.0.0
+	 * @param 	string    $prefix    The field name prefix for this plugin.
+	 * @param 	array    $post_types   The post types (should be 'user') that use these metaboxes.
+	 */
 	function add_user_metaboxes( $prefix, $post_types ) {
 
 		$cmb = new_cmb2_box( array(
@@ -137,7 +156,7 @@ class OSS_Sitename_Metaboxes {
 			'id'       => $prefix . 'settings',
 			'type'     => 'title',
 			'on_front' => false,
-	        'show_on_cb' => 'cmb_only_show_on_admin_user_profile', // function should return a bool value
+	        'show_on_cb' => 'osc_cmb_only_show_on_admin_user_profile', // function should return a bool value
 		) );
 
 		$cmb->add_field( array(
@@ -152,7 +171,7 @@ class OSS_Sitename_Metaboxes {
 			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => 'test_text_2',
 			'type'       => 'text',
-			'show_on_cb' => 'cmb_only_show_on_admin_user_profile', // function should return a bool value
+			'show_on_cb' => 'osc_cmb_only_show_on_admin_user_profile', // function should return a bool value
 		) );
 
 	}
@@ -172,13 +191,4 @@ class OSS_Sitename_Metaboxes {
 		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'plugin-text-domain' ), 'updated' );
 		settings_errors( $this->key . '-notices' );
 	}
-}
-
-function cmb_only_show_on_admin_user_profile( $field ) {
-	$screen = get_current_screen();
-
-	if ( $screen->id == 'user' )
-	        return false;
-
-	return true;
 }
