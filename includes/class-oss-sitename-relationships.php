@@ -27,7 +27,7 @@ class OSS_Sitename_Relationships {
 	 */
 	function register_relationships() {
 
-		// Pages -> Books
+		// Post -> Books (CPT)
 	    p2p_register_connection_type( array(
 	        'name' => 'posts_to_books',
 	        'from' => 'post',
@@ -46,6 +46,27 @@ class OSS_Sitename_Relationships {
 			    )
 
 	    ) );
+
+		// Posts -> Posts
+		p2p_register_connection_type( array(
+		    'name' => 'posts_to_posts',
+		    'from' => 'post',
+		    'to' => 'post',
+		    'reciprocal' => true,
+		    'title' => __( 'Related Posts', 'plugin-text-domain' ),
+	        'admin_box' => array(
+			    'show' => 'any',
+			    'context' => 'advanced'
+			    )
+		) );
+
+		// Books (CPT) -> Users
+		p2p_register_connection_type( array(
+		    'name' => 'books_to_users',
+		    'from' => 'oss_book',
+		    'to' => 'user',
+		    //'to_query_vars' => array( 'role' => 'editor' )
+		) );
 
 	}
 
