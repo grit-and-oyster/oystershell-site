@@ -111,7 +111,10 @@ class OSS_Sitename_Public {
 	 */
 	public function p2p_plugin_admin_notice() {
 
-		 echo '<div class="updated"><p><strong>Warning:</strong> Relationships between posts have not been registered as Post2Posts plugin not active.</p></div>';
+		$class = 'notice notice-warning';
+		$message = __( 'Relationships between posts have not been registered as the Posts 2 Posts plugin is not active.', 'sample-text-domain' );
+
+		printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message ); 
 
 	}
 
