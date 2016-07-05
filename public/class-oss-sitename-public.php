@@ -3,6 +3,16 @@
 /**
  * The public-facing functionality of the plugin.
  *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
+ * The public-facing functionality of the plugin.
+ *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *

@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Adds custom taxonomies
+ *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
  * Adds custom taxonomies.
  *
  * This class defines and adds custom taxonomies.

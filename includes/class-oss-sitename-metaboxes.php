@@ -1,9 +1,19 @@
 <?php
 
 /**
- * Adds custom taxonomies.
+ * Adds custom metaboxes
  *
- * This class defines and adds custom taxonomies.
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
+ * Adds custom metaboxes.
+ *
+ * This class defines and adds custom metaboxes using the CMB2 library.
  *
  * @since      1.0.0
  * @package    OSS_Sitename
@@ -60,7 +70,7 @@ class OSS_Sitename_Metaboxes {
 		 */
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
-			'title'         => __( 'Test Metabox', 'cmb2' ),
+			'title'         => __( 'Test Metabox', 'plugin-text-domain' ),
 			'object_types'  => $post_types, // Post type
 			// 'context'    => 'normal',
 			// 'priority'   => 'high',
@@ -70,8 +80,8 @@ class OSS_Sitename_Metaboxes {
 		) );
 
 		$cmb->add_field( array(
-			'name'       => __( 'Test Text', 'cmb2' ),
-			'desc'       => __( 'field description (optional)', 'cmb2' ),
+			'name'       => __( 'Test Text', 'plugin-text-domain' ),
+			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => $prefix . 'text',
 			'type'       => 'text',
 		) );
@@ -95,15 +105,15 @@ class OSS_Sitename_Metaboxes {
 		) );
 
 		$cmb->add_field( array(
-				'name'     => __( 'General Settings', 'textdomain' ),
+				'name'     => __( 'General Settings', 'plugin-text-domain' ),
 				//'desc' => __( 'field description (optional)', 'myprefix' ),
 				'id'       => $prefix . '_title',
 				'type'     => 'title',
 			) );
 
 		$cmb->add_field( array(
-			'name'       => __( 'Test Text', 'textdomain' ),
-			'desc'       => __( 'field description (optional)', 'textdomain' ),
+			'name'       => __( 'Test Text', 'plugin-text-domain' ),
+			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => 'test_text',
 			'type'       => 'text',
 		) );
@@ -114,7 +124,7 @@ class OSS_Sitename_Metaboxes {
 
 		$cmb_user = new_cmb2_box( array(
 			'id'            => $prefix . 'user_metabox',
-			'title'         => __( 'User Metabox', 'textdomain' ),
+			'title'         => __( 'User Metabox', 'plugin-text-domain' ),
 			'object_types'  => $post_types, // Post type
 			'context'    => 'normal',
 			'priority'   => 'high',
@@ -123,7 +133,7 @@ class OSS_Sitename_Metaboxes {
 		) );
 
 		$cmb_user->add_field( array(
-			'name'     => __( 'User Settings', 'textdomain' ),
+			'name'     => __( 'User Settings', 'plugin-text-domain' ),
 			'id'       => $prefix . 'settings',
 			'type'     => 'title',
 			'on_front' => false,
@@ -131,15 +141,15 @@ class OSS_Sitename_Metaboxes {
 		) );
 
 		$cmb->add_field( array(
-			'name'       => __( 'Test Text', 'textdomain' ),
-			'desc'       => __( 'field description (optional)', 'textdomain' ),
+			'name'       => __( 'Test Text', 'plugin-text-domain' ),
+			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => 'test_text',
 			'type'       => 'text',
 		) );
 
 		$cmb->add_field( array(
-			'name'       => __( 'Test Text 2', 'textdomain' ),
-			'desc'       => __( 'field description (optional)', 'textdomain' ),
+			'name'       => __( 'Test Text 2', 'plugin-text-domain' ),
+			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => 'test_text_2',
 			'type'       => 'text',
 			'show_on_cb' => 'cmb_only_show_on_admin_user_profile', // function should return a bool value
@@ -159,7 +169,7 @@ class OSS_Sitename_Metaboxes {
 		if ( $object_id !== $this->key || empty( $updated ) ) {
 			return;
 		}
-		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'textdomain' ), 'updated' );
+		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'plugin-text-domain' ), 'updated' );
 		settings_errors( $this->key . '-notices' );
 	}
 }

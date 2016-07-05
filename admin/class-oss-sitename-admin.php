@@ -89,8 +89,8 @@ class OSS_Sitename_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 
-	    $page_title = __( 'Site Specific Settings', $this->plugin_name );
-	    $menu_title = __( 'Site Specific', $this->plugin_name );
+	    $page_title = __( 'Site Specific Settings', 'plugin-text-domain' );
+	    $menu_title = __( 'Site Specific', 'plugin-text-domain' );
 	    $capability = 'manage_options';
 	    $menu_slug = $this->plugin_name;
 	    $function = array( $this, 'display_plugin_admin_page' );
@@ -112,7 +112,7 @@ class OSS_Sitename_Admin {
 
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', $this->plugin_name ) . '</a>'
+				'settings' => '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __( 'Settings', 'plugin-text-domain' ) . '</a>'
 			),
 			$links
 		);
@@ -159,7 +159,7 @@ class OSS_Sitename_Admin {
 	public function display_plugin_admin_page() {
 
 		if ( !current_user_can( 'manage_options' ) )  { 
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'plugin-text-domain' ) );
 		}
 
 		$this->admin_switch();
@@ -232,7 +232,7 @@ class OSS_Sitename_Admin {
 			if ($action == $tab) {
 				$active = 'nav-tab-active';
 			}
-			$output = $output . '<a href="' . $link . '" class="nav-tab ' . $active . '">' . __( ucfirst($tab), 'tekdigital' ) . '</a>';
+			$output = $output . '<a href="' . $link . '" class="nav-tab ' . $active . '">' . __( ucfirst($tab), 'plugin-text-domain' ) . '</a>';
 		}
 
 		$output = $output . '</h2>';
@@ -273,7 +273,7 @@ class OSS_Sitename_Admin {
 				// do nothing
 
 			} else {
-				add_settings_error( $key . '-notices', '', __( 'Settings updated.', 'tekdigital' ), 'updated' );
+				add_settings_error( $key . '-notices', '', __( 'Settings updated.', 'plugin-text-domain' ), 'updated' );
 				settings_errors( $key . '-notices' );				
 			}
 		}

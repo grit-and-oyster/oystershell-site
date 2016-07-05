@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Adds relationships between posts
+ *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
  * Adds relationships between posts.
  *
  * This class defines and adds relationships between post types.
@@ -26,8 +36,8 @@ class OSS_Sitename_Relationships {
 	        'sortable' => 'any',
 
 	        'title' => array(
-				'from' => __( 'Books', 'textdomain' ),
-				'to' => __( 'Posts', 'textdomain' )
+				'from' => __( 'Books', 'plugin-text-domain' ),
+				'to' => __( 'Posts', 'plugin-text-domain' )
 				),
 
 	        'admin_box' => array(

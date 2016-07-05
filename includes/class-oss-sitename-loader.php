@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Register all actions and filters for the plugin
+ *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
  * Register all actions and filters for the plugin.
  *
  * Maintain a list of all hooks that are registered throughout

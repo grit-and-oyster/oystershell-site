@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Adds a custom post type
+ *
+ * @link       http://grit-oyster.co.uk/
+ * @since      1.0.0
+ *
+ * @package    OSS_Sitename
+ * @subpackage OSS_Sitename/includes
+ */
+
+/**
  * Adds a custom post type.
  *
  * This class defines and adds a custom post type.
@@ -45,30 +55,30 @@ class OSS_Sitename_Cpt_Name {
 		$label_featured_image_lc = strtolower( $label_featured_image );
 
 	    $labels = array(
-	        'name'                  => _x( $label_general, 'Post type general name', 'textdomain' ),
-	        'singular_name'         => _x( $label_singular, 'Post type singular name', 'textdomain' ),
-	        'menu_name'             => _x( $label_general, 'Admin Menu text', 'textdomain' ),
-	        'name_admin_bar'        => _x( $label_singular, 'Add New on Toolbar', 'textdomain' ),
-	        'add_new'               => __( 'Add New', 'textdomain' ),
-	        'add_new_item'          => __( 'Add New ' . $label_singular, 'textdomain' ),
-	        'new_item'              => __( 'New ' . $label_singular, 'textdomain' ),
-	        'edit_item'             => __( 'Edit ' . $label_singular, 'textdomain' ),
-	        'view_item'             => __( 'View ' . $label_singular, 'textdomain' ),
-	        'all_items'             => __( 'All ' . $label_general, 'textdomain' ),
-	        'search_items'          => __( 'Search ' . $label_general, 'textdomain' ),
-	        'parent_item_colon'     => __( 'Parent ' . $label_singular . ':', 'textdomain' ),
-	        'not_found'             => __( 'No ' . $label_general_lc . ' found.', 'textdomain' ),
-	        'not_found_in_trash'    => __( 'No ' . $label_general_lc . ' found in Trash.', 'textdomain' ),
-	        'featured_image'        => _x( $label_featured_image, 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-	        'set_featured_image'    => _x( 'Set ' . $label_featured_image, 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-	        'remove_featured_image' => _x( 'Remove ' . $label_featured_image, 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-	        'use_featured_image'    => _x( 'Use as ' . $label_featured_image, 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-	        'archives'              => _x( $label_singular . ' archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-	        'insert_into_item'      => _x( 'Insert into ' . $label_singular_lc, 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-	        'uploaded_to_this_item' => _x( 'Uploaded to this ' . $label_singular_lc, 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-	        'filter_items_list'     => _x( 'Filter ' . $label_general_lc . ' list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-	        'items_list_navigation' => _x( $label_general . ' list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-	        'items_list'            => _x( $label_general . ' list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	        'name'                  => _x( $label_general, 'Post type general name', 'plugin-text-domain' ),
+	        'singular_name'         => _x( $label_singular, 'Post type singular name', 'plugin-text-domain' ),
+	        'menu_name'             => _x( $label_general, 'Admin Menu text', 'plugin-text-domain' ),
+	        'name_admin_bar'        => _x( $label_singular, 'Add New on Toolbar', 'plugin-text-domain' ),
+	        'add_new'               => __( 'Add New', 'plugin-text-domain' ),
+	        'add_new_item'          => __( 'Add New ' . $label_singular, 'plugin-text-domain' ),
+	        'new_item'              => __( 'New ' . $label_singular, 'plugin-text-domain' ),
+	        'edit_item'             => __( 'Edit ' . $label_singular, 'plugin-text-domain' ),
+	        'view_item'             => __( 'View ' . $label_singular, 'plugin-text-domain' ),
+	        'all_items'             => __( 'All ' . $label_general, 'plugin-text-domain' ),
+	        'search_items'          => __( 'Search ' . $label_general, 'plugin-text-domain' ),
+	        'parent_item_colon'     => __( 'Parent ' . $label_singular . ':', 'plugin-text-domain' ),
+	        'not_found'             => __( 'No ' . $label_general_lc . ' found.', 'plugin-text-domain' ),
+	        'not_found_in_trash'    => __( 'No ' . $label_general_lc . ' found in Trash.', 'plugin-text-domain' ),
+	        'featured_image'        => _x( $label_featured_image, 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'plugin-text-domain' ),
+	        'set_featured_image'    => _x( 'Set ' . $label_featured_image, 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'plugin-text-domain' ),
+	        'remove_featured_image' => _x( 'Remove ' . $label_featured_image, 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'plugin-text-domain' ),
+	        'use_featured_image'    => _x( 'Use as ' . $label_featured_image, 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'plugin-text-domain' ),
+	        'archives'              => _x( $label_singular . ' archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'plugin-text-domain' ),
+	        'insert_into_item'      => _x( 'Insert into ' . $label_singular_lc, 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'plugin-text-domain' ),
+	        'uploaded_to_this_item' => _x( 'Uploaded to this ' . $label_singular_lc, 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'plugin-text-domain' ),
+	        'filter_items_list'     => _x( 'Filter ' . $label_general_lc . ' list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'plugin-text-domain' ),
+	        'items_list_navigation' => _x( $label_general . ' list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'plugin-text-domain' ),
+	        'items_list'            => _x( $label_general . ' list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'plugin-text-domain' ),
 	 
 	    );
 
@@ -92,7 +102,7 @@ class OSS_Sitename_Cpt_Name {
          * A short description of what your post type is. As far as I know, this isn't used anywhere 
          * in core WordPress.  However, themes may choose to display this on post type archives. 
          */
-        //$config['description'] = __( 'This is a description for my post type.', 'example-textdomain' ); // string
+        //$config['description'] = __( 'This is a description for my post type.', 'example-plugin-text-domain' ); // string
 
         /**
         * The slug to use for individual posts of this type. 
