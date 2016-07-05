@@ -122,7 +122,7 @@ class OSS_Sitename_Metaboxes {
 
 	function add_user_metaboxes( $prefix, $post_types ) {
 
-		$cmb_user = new_cmb2_box( array(
+		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'user_metabox',
 			'title'         => __( 'User Metabox', 'plugin-text-domain' ),
 			'object_types'  => $post_types, // Post type
@@ -132,7 +132,7 @@ class OSS_Sitename_Metaboxes {
 			'new_user_section' => 'add-new-user', // where form will show on new user page. 'add-existing-user' is only other valid option.
 		) );
 
-		$cmb_user->add_field( array(
+		$cmb->add_field( array(
 			'name'     => __( 'User Settings', 'plugin-text-domain' ),
 			'id'       => $prefix . 'settings',
 			'type'     => 'title',
