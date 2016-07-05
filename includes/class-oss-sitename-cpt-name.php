@@ -85,8 +85,6 @@ class OSS_Sitename_Cpt_Name {
 		return $labels;
 	}
 
-
-
 	/**
 	 * Defines the settings of the custom post type
 	 *
@@ -102,12 +100,12 @@ class OSS_Sitename_Cpt_Name {
          * A short description of what your post type is. As far as I know, this isn't used anywhere 
          * in core WordPress.  However, themes may choose to display this on post type archives. 
          */
-        //$config['description'] = __( 'This is a description for my post type.', 'example-plugin-text-domain' ); // string
+        $config['description'] = __( 'This is a description for my post type.', 'plugin-text-domain' ); // string
 
         /**
-        * The slug to use for individual posts of this type. 
-        */
-        $config['slug'] = 'book'; // string (defaults to the post type name)
+         * Whether this post type should allow hierarchical (parent/child/grandchild/etc.) posts. 
+         */
+        $config['hierarchical'] = false; // bool (defaults to FALSE)
 
         /** 
          * Whether the post type should be used publicly via the admin or by front-end users.  This 
@@ -127,11 +125,6 @@ class OSS_Sitename_Cpt_Name {
         $config['publicly_queryable'] = true; // bool (defaults to 'public').
 
         /**
-         * Whether individual post type items are available for selection in navigation menus. 
-         */
-        $config['show_in_nav_menus'] = true; // bool (defaults to 'public')
-
-        /**
          * Whether to generate a default UI for managing this post type in the admin. You'll have 
          * more control over what's shown in the admin with the other arguments.  To build your 
          * own UI, set this to FALSE.
@@ -143,6 +136,11 @@ class OSS_Sitename_Cpt_Name {
          */
         $config['show_in_menu'] = true; // bool (defaults to 'show_ui')
 
+        /**
+         * Whether individual post type items are available for selection in navigation menus. 
+         */
+        $config['show_in_nav_menus'] = true; // bool (defaults to 'public')
+ 
         /**
          * Whether to make this post type available in the WordPress admin bar. The admin bar adds 
          * a link to add a new post type item.
@@ -164,20 +162,14 @@ class OSS_Sitename_Cpt_Name {
         $config['menu_icon'] = 'dashicons-book';
 
         /**
-         * Whether the posts of this post type can be exported via the WordPress import/export plugin 
-         * or a similar plugin. 
+         * A string used to build the edit, delete, and read capabilities for posts of this type. You 
+         * can use a string or an array (for singular and plural forms).  The array is useful if the 
+         * plural form can't be made by simply adding an 's' to the end of the word.  For example, 
+         * array( 'box', 'boxes' ).
+         * We just want to keep the same permissions as for blog posts so we are using the default.
+         * This means that 'map_meta_cap' and 'capabilities' arguments are left out.
          */
-        $config['can_export'] = true; // bool (defaults to TRUE)
-
-        /**
-         * Whether to delete posts of this type when deleting a user who has written posts. 
-         */
-        $config['delete_with_user'] = false; // bool (defaults to TRUE if the post type supports 'author')
-
-        /**
-         * Whether this post type should allow hierarchical (parent/child/grandchild/etc.) posts. 
-         */
-        $config['hierarchical'] = false; // bool (defaults to FALSE)
+        $config['capability_type'] = 'post'; // string|array (defaults to 'post')
 
         /** 
          * Whether the post type has an index/archive/root page like the "page for posts" for regular 
@@ -188,21 +180,15 @@ class OSS_Sitename_Cpt_Name {
         //$config['has_archive'] = 'bookslist';
 
         /**
-         * Sets the query_var key for this post type. If set to TRUE, the post type name will be used. 
-         * You can also set this to a custom string to control the exact key.
-         */
-        $config['query_var'] = true; // bool|string (defaults to TRUE - post type name)
-        //$config['query_var'] = 'books';
+        * Triggers the handling of rewrites for this post type. To prevent rewrite, set to false. 
+        * If set to true an array of rewrite rules will be used. 
+        */
+        $config['rewrite'] = true; // bool (defaults to the 'has_archive' argument)
 
-        /**
-         * A string used to build the edit, delete, and read capabilities for posts of this type. You 
-         * can use a string or an array (for singular and plural forms).  The array is useful if the 
-         * plural form can't be made by simply adding an 's' to the end of the word.  For example, 
-         * array( 'box', 'boxes' ).
-         * We just want to keep the same permissions as for blog posts so we are using the default.
-         * This means that 'map_meta_cap' and 'capabilities' arguments are left out.
-         */
-        $config['capability_type'] = 'post'; // string|array (defaults to 'post')
+       /**
+        * The slug to use for individual posts of this type. 
+        */
+        $config['slug'] = 'book'; // string (defaults to the post type name)
 
 		/**
 		* Whether to show the $wp_rewrite->front slug in the permalink.
@@ -215,9 +201,29 @@ class OSS_Sitename_Cpt_Name {
         */
         $config['feeds'] = true; // bool (defaults to the 'has_archive' argument)
 
+        /**
+         * Sets the query_var key for this post type. If set to TRUE, the post type name will be used. 
+         * You can also set this to a custom string to control the exact key.
+         */
+        $config['query_var'] = true; // bool|string (defaults to TRUE - post type name)
+        //$config['query_var'] = 'books';
+
+        /**
+         * Whether the posts of this post type can be exported via the WordPress import/export plugin 
+         * or a similar plugin. 
+         */
+        $config['can_export'] = true; // bool (defaults to TRUE)
+
+        /**
+         * Whether to delete posts of this type when deleting a user who has written posts. 
+         */
+        $config['delete_with_user'] = false; // bool (defaults to TRUE if the post type supports 'author')
+
+
 		/**
          * What WordPress features the post type supports. 
          */
+		$config['supports_standard'] = array('title','editor','author','excerpt');
         $config['supports_thumbnail'] = true;
         $config['supports_comments'] = false;
 		$config['supports_customfields'] = false;
@@ -240,30 +246,37 @@ class OSS_Sitename_Cpt_Name {
 	 */
 	public function create( $name, $labels, $config ) {
 
+		if ( true == $config['rewrite'] ) {
+			$rewrite = array( 
+							'slug' => $config['slug'],
+							'with_front' => $config['with_front'],
+							'feeds' => $config['feeds'],
+						 );
+		} else {
+			$rewrite = $config['rewrite'];
+		}
+
 	    $args = array(
-	    	//'description'		  => $config['description'],	
+
 	        'labels'              => $labels,
+	    	'description'		  => $config['description'],	
 	        'public'              => $config['public'],
+			'hierarchical'        => $config['hierarchical'],
 	        'exclude_from_search' => $config['exclude_from_search'],
 	        'publicly_queryable'  => $config['publicly_queryable'],
-			'show_in_nav_menus'   => $config['show_in_nav_menus'],
 	        'show_ui'             => $config['show_ui'],
 	        'show_in_menu'        => $config['show_in_menu'],
+			'show_in_nav_menus'   => $config['show_in_nav_menus'],
 	        'show_in_admin_bar'   => $config['show_in_admin_bar'],
 	        'menu_position'       => $config['menu_position'],
 	        'menu_icon'      	  => $config['menu_icon'],
-			'can_export'      	  => $config['can_export'],
-			'delete_with_user'    => $config['delete_with_user'],
-			'hierarchical'        => $config['hierarchical'],
-			'has_archive'         => $config['has_archive'],
-	        'query_var'           => $config['query_var'],
 	        'capability_type'     => $config['capability_type'],
-	        'rewrite'             => array( 
-	        							'slug' => $config['slug'],
-	        							'with_front' => $config['with_front'],
-	        							'feeds' => $config['feeds'],
-	        						 ),
-	        'supports'           => array('title','editor','author','excerpt'),
+			'supports'            => $config['supports_standard'],
+			'has_archive'         => $config['has_archive'],
+	        'rewrite'             => $rewrite,
+	        'query_var'           => $config['query_var'],
+			'can_export'      	  => $config['can_export'],
+			'delete_with_user'    => $config['delete_with_user'],        
 	    );
 
     	/* Register the post type. */
@@ -290,8 +303,6 @@ class OSS_Sitename_Cpt_Name {
 		if ( true == $config['has_tags'] ) {
 			register_taxonomy_for_object_type( 'post_tag', $name );
 		}
-
-
 	}
 
 }
