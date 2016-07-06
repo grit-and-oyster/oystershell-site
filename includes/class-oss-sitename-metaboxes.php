@@ -93,6 +93,22 @@ class OSS_Sitename_Metaboxes {
 			'type'       => 'text',
 		) );
 
+		$cmb->add_field( array(
+		    'name'     => __( 'Status', 'plugin-text-domain' ),
+		    //'desc'     => 'Description Goes Here',
+		    'id'       => $prefix . 'custom_status',
+		    'taxonomy' => 'oss_custom_status', //Enter Taxonomy Slug
+		    'type'     => 'taxonomy_select',
+		) );
+
+		$cmb->add_field( array(
+		    'name'     => __( 'Type', 'plugin-text-domain' ),
+		    //'desc'     => 'Description Goes Here',
+		    'id'       => $prefix . 'custom_type',
+		    'taxonomy' => 'oss_custom_type', //Enter Taxonomy Slug
+		    'type'     => 'taxonomy_select',
+		) );
+
 	}
 
 	/**
