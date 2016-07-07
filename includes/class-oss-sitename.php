@@ -163,6 +163,12 @@ class OSS_Sitename {
 	private function load_libraries() {
 
 		/**
+		 * Load the Oystershell Core library
+		 * Essential classes and helper functions for the Oystershell framework.
+		 */
+		add_action( 'plugins_loaded', 'osc_load_library_oystershell', 0 );
+
+		/**
 		 * Load the CMB2 library
 		 * CMB2 is a developer's toolkit for building metaboxes, custom fields, and forms for WordPress.
 		 */
