@@ -190,6 +190,15 @@ class OSS_Sitename_Metaboxes {
 			'show_on_cb' => 'osc_cmb_only_show_on_admin_user_profile', // function should return a bool value
 		) );
 
+		$cmb->add_field( array(
+		    'name'       => __( 'Test Display Name', 'plugin-text-domain' ),
+		    'desc'       => __( 'Display name publicly as', 'plugin-text-domain' ),
+		    'id'         => 'display_name',
+		    'type'       => 'select',
+		    'default'    => 'custom',
+		    'options_cb' => 'osc_cmb_show_user_display_name_options',
+			'show_on_cb' => 'osc_cmb_only_show_on_admin_user_profile', // function should return a bool value
+		) );
 	}
 
 	/**
