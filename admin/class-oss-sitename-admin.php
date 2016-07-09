@@ -295,6 +295,59 @@ class OSS_Sitename_Admin {
 		}
 	}
 
+	/*------------------------------------------------------------------------
+	MAKE LIST TABLE COLUMNS SORTABLE */
+
+	/**
+	* Defines which ldhg_events columns are sortable
+	*
+	* @param array $columns Existing sortable columns
+	* @return array New sortable columns
+	*/
+	function events_cpt_define_sortable_table_columns( $columns ) {
+	 
+		$columns['_sitename_book_date'] = 'book_date';
+	     
+	    return $columns; 
+	}
+
+	/**
+	* Inspect the request to see if we are on the ldhg_event WP_List_Table and attempting to
+	* sort by historical date.  If so, amend the Posts query to sort by
+	* that custom meta key
+	*
+	* @param array $vars Request Variables
+	* @return array New Request Variables
+	*/
+	function orderby_sortable_table_columns( $vars ) {
+	 
+	    // Don't do anything if we are not on the Contact Custom Post Type
+		if ( ! isset( $vars['post_type'] ) )  return $vars;
+    	if ( 'oss_book' != $vars['post_type'] ) return $vars;
+     
+	    // Don't do anything if no orderby parameter is set
+	    if ( ! isset( $vars['orderby'] ) ) return $vars;
+	     
+	    // Check if the orderby parameter matches one of our sortable columns
+        switch ( $vars['orderby'] ) {
+	    	case 'book_date':
+		        // Add orderby meta_value and meta_key parameters to the query
+		        $vars = array_merge( $vars, array(
+		            'meta_key' => '_sitename_book_date',
+		            'orderby' => 'meta_value_num',
+		        ));
+		  		break;
+	    	default:
+	    		return $vars; 
+	    		break;
+	    }
+	     
+	    return $vars; 
+	}
+
+	/*------------------------------------------------------------------------
+	ENQUEUE STYLES AND SCRIPTS */
+
 	/**
 	 * Register the stylesheets for the admin area.
 	 *

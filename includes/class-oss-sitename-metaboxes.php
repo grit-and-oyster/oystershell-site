@@ -109,6 +109,17 @@ class OSS_Sitename_Metaboxes {
 		    'type'     => 'taxonomy_select',
 		) );
 
+		$cmb->add_field( array(
+			'name'       => __( 'Date', 'plugin-text-domain' ),
+			//'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
+			'id'         => $prefix . 'book_date',
+			'type'       => 'text_date_timestamp',
+		    'column' => array(
+		        'position' => 2,
+		        'name'     => 'Book Date',
+		    ),
+			'date_format' => 'd/m/Y',
+		) );
 	}
 
 	/**
