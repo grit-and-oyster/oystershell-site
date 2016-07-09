@@ -92,8 +92,9 @@ class OSS_Sitename_Admin {
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
 		 *
+		 * Hooked to 'admin_menu' action.
+		 *
 		 */
-
 	    $page_title = __( 'Site Specific Settings', 'plugin-text-domain' );
 	    $menu_title = __( 'Site Specific', 'plugin-text-domain' );
 	    $capability = 'manage_options';
