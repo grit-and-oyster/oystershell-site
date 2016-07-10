@@ -217,6 +217,11 @@ class OSS_Sitename {
 		// Register custom metaboxes used in the admin.
 		$this->loader->add_action( 'cmb2_admin_init', $plugin_admin, 'register_metaboxes' );
 
+		// Make list table columns sortable.
+		$this->loader->add_filter( 'manage_edit-oss_book_sortable_columns', $plugin_admin, 'book_cpt_define_sortable_table_columns' );
+ 		$this->loader->add_filter( 'request', $plugin_admin, 'orderby_sortable_table_columns' );
+
+		// Enqueue styles and scripts.
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 	}
@@ -250,7 +255,8 @@ class OSS_Sitename {
 
 		// Define theme template specific hooks.
 		$this->loader->add_action( 'wp', $plugin_public, 'init_page_templates' );
-
+	
+		// Enqueue styles and scripts.
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 	}

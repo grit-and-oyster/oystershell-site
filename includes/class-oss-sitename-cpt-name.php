@@ -101,6 +101,7 @@ class OSS_Sitename_Cpt_Name {
          * in core WordPress.  However, themes may choose to display this on post type archives. 
          */
         $config['description'] = __( 'This is a description for my post type.', 'plugin-text-domain' ); // string
+        //$config['description'] = '';
 
         /**
          * Whether this post type should allow hierarchical (parent/child/grandchild/etc.) posts. 

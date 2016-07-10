@@ -304,7 +304,7 @@ class OSS_Sitename_Admin {
 	* @param array $columns Existing sortable columns
 	* @return array New sortable columns
 	*/
-	function events_cpt_define_sortable_table_columns( $columns ) {
+	function book_cpt_define_sortable_table_columns( $columns ) {
 	 
 		$columns['_sitename_book_date'] = 'book_date';
 	     
