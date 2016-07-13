@@ -299,7 +299,7 @@ class OSS_Sitename_Admin {
 	MAKE LIST TABLE COLUMNS SORTABLE */
 
 	/**
-	* Defines which ldhg_events columns are sortable
+	* Defines which list columns are sortable
 	*
 	* @param array $columns Existing sortable columns
 	* @return array New sortable columns
@@ -323,7 +323,9 @@ class OSS_Sitename_Admin {
 	 
 	    // Don't do anything if we are not on the Contact Custom Post Type
 		if ( ! isset( $vars['post_type'] ) )  return $vars;
-    	if ( 'oss_book' != $vars['post_type'] ) return $vars;
+
+		$post_types = array( 'oss_book', );
+		if ( !in_array( $vars['post_type'], $post_types ) ) return $vars;
      
 	    // Don't do anything if no orderby parameter is set
 	    if ( ! isset( $vars['orderby'] ) ) return $vars;
