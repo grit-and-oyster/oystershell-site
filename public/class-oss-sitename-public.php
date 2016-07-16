@@ -144,6 +144,17 @@ class OSS_Sitename_Public {
 	}
 
 	/**
+	 * Register custom widgets with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function register_widgets() {
+
+		register_widget( 'OSS_Sitename_Widgets_ExampleWidget' );
+
+	}
+
+	/**
 	 * Register shortcodes with WordPress.
 	 *
 	 * @since    1.0.0

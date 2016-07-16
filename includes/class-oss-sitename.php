@@ -140,6 +140,11 @@ class OSS_Sitename {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-relationships.php';
 
 		/**
+		 * The classes responsible for defining one or more custom widgets.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-oss-sitename-widgets.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-oss-sitename-admin.php';
@@ -249,6 +254,9 @@ class OSS_Sitename {
 
 		// Register public facing custom metaboxes.
 		$this->loader->add_action( 'cmb2_init', $plugin_public, 'register_metaboxes' );
+
+		// Register custom widgets.
+		$this->loader->add_action( 'widgets_init',  $plugin_public, 'register_widgets' );
 
 		// Register shortcodes.
 		$this->loader->add_action( 'init', $plugin_public, 'create_shortcodes' );
