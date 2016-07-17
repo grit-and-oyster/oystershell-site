@@ -259,7 +259,7 @@ class OSS_Sitename {
 		$this->loader->add_action( 'widgets_init',  $plugin_public, 'register_widgets' );
 
 		// Register shortcodes.
-		$this->loader->add_action( 'init', $plugin_public, 'create_shortcodes' );
+		$this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
 
 		// Define theme template specific hooks.
 		$this->loader->add_action( 'wp', $plugin_public, 'init_page_templates' );

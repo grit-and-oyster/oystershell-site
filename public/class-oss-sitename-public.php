@@ -159,9 +159,9 @@ class OSS_Sitename_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function create_shortcodes() {
+	public function register_shortcodes() {
 
-		//add_shortcode( $args ) );
+		add_shortcode( 'example' , array( $this, 'shortcode_example' ) );
 
 	}
 
@@ -225,4 +225,16 @@ class OSS_Sitename_Public {
 
 	}
 
+	/**
+	 * An example shortcode output function.
+	 *
+	 * @since    1.0.0
+	 */
+	public function shortcode_example() {
+
+		$output = '<p>Example Shortcode Output</p>';
+
+		return $output;
+
+	}
 }
