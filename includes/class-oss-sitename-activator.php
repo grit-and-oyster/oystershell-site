@@ -31,6 +31,11 @@ class OSS_Sitename_Activator {
 	 */
 	public static function activate() {
 
+		if( ! is_plugin_active( 'oystershell-core/oystershell-core.php' ) ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+            wp_die( __( 'This plugin requires Oystershell Core.', 'plugin-text-domain' ) );
+		}
+
 	}
 
 }
