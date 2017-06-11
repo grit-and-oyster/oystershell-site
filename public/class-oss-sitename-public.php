@@ -226,6 +226,43 @@ class OSS_Sitename_Public {
 	}
 
 	/**
+	 * Checks for valid Google Analytics tracking code
+	 *
+	 * @since    1.0.1
+	 */
+	function isAnalytics($str){
+	    return preg_match('/^ua-\d{4,9}-\d{1,4}$/i', strval($str)) ? true : false;
+	}
+
+	/**
+	 * Inserts the Google Analytics tracking code into the page head.
+	 *
+	 * @since    1.0.1
+	 */
+	public function google_analytics() {
+		$code = osc_cmb_get_option( '_sitename_options_analytics', 'ga_code' );
+
+		if ( true == $this->isAnalytics($code) ) {
+
+			$output = "
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', '" . $code . "', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+			";
+
+			echo $output;
+		}
+	}
+
+	/**
 	 * An example shortcode output function.
 	 *
 	 * @since    1.0.0

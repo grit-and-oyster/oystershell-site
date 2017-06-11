@@ -194,7 +194,7 @@ class OSS_Sitename {
 
 		$plugin_i18n = new OSS_Sitename_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );		
+		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -263,10 +263,13 @@ class OSS_Sitename {
 
 		// Define theme template specific hooks.
 		$this->loader->add_action( 'wp', $plugin_public, 'init_page_templates' );
-	
+
 		// Enqueue styles and scripts.
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		// Add Google Analytics tracking code to page head.
+		$this->loader->add_action( 'wp_head', $plugin_public, 'google_analytics' );
 	}
 
 	/**
