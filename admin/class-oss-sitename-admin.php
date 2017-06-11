@@ -78,7 +78,7 @@ class OSS_Sitename_Admin {
 	 *
 	 * @var      string
 	 */
-	protected $tabs = array( 'general' );
+	protected $tabs = array( 'general', 'analytics' );
 
 	/**
 	 * Register the administration menu for this plugin into the WordPress settings menu.
@@ -164,7 +164,7 @@ class OSS_Sitename_Admin {
 		$metaboxes->register_admin_metaboxes();
 
 		//Add additional notices for CMB2 metaboxes
-		$this->hook_save_notices();		
+		$this->hook_save_notices();
 	}
 
 	/**
@@ -174,7 +174,7 @@ class OSS_Sitename_Admin {
 	 */
 	public function display_plugin_admin_page() {
 
-		if ( !current_user_can( 'manage_options' ) )  { 
+		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'plugin-text-domain' ) );
 		}
 
@@ -202,10 +202,13 @@ class OSS_Sitename_Admin {
 		switch($action) {
 			case 'general':
 				$this->do_action_default( $action );
-			break;	
+			break;
+			case 'analytics':
+				$this->do_action_default( $action );
+			break;
 			default:
 				$this->do_action_default( 'general' );
-			break;	
+			break;
 		}
 	}
 
@@ -262,7 +265,7 @@ class OSS_Sitename_Admin {
 	 * @since    1.0.0
 	 */
 	public function hook_save_notices() {
-	
+
 		foreach ($this->tabs as $tab) {
 
 			$key = $this->prefix . 'options_' . $tab;
@@ -280,7 +283,7 @@ class OSS_Sitename_Admin {
 	 * @return void
 	 */
 	public function settings_notices( $object_id, $updated ) {
-	
+
 		foreach ($this->tabs as $tab) {
 
 			$key = $this->prefix . 'options_' . $tab;
@@ -290,7 +293,7 @@ class OSS_Sitename_Admin {
 
 			} else {
 				add_settings_error( $key . '-notices', '', __( 'Settings updated.', 'plugin-text-domain' ), 'updated' );
-				settings_errors( $key . '-notices' );				
+				settings_errors( $key . '-notices' );
 			}
 		}
 	}
@@ -305,10 +308,10 @@ class OSS_Sitename_Admin {
 	* @return array New sortable columns
 	*/
 	function book_cpt_define_sortable_table_columns( $columns ) {
-	 
+
 		$columns['_sitename_book_date'] = 'book_date';
-	     
-	    return $columns; 
+
+	    return $columns;
 	}
 
 	/**
@@ -320,16 +323,16 @@ class OSS_Sitename_Admin {
 	* @return array New Request Variables
 	*/
 	function orderby_sortable_table_columns( $vars ) {
-	 
+
 	    // Don't do anything if we are not on the Contact Custom Post Type
 		if ( ! isset( $vars['post_type'] ) )  return $vars;
 
 		$post_types = array( 'oss_book', );
 		if ( !in_array( $vars['post_type'], $post_types ) ) return $vars;
-     
+
 	    // Don't do anything if no orderby parameter is set
 	    if ( ! isset( $vars['orderby'] ) ) return $vars;
-	     
+
 	    // Check if the orderby parameter matches one of our sortable columns
         switch ( $vars['orderby'] ) {
 	    	case 'book_date':
@@ -340,11 +343,11 @@ class OSS_Sitename_Admin {
 		        ));
 		  		break;
 	    	default:
-	    		return $vars; 
+	    		return $vars;
 	    		break;
 	    }
-	     
-	    return $vars; 
+
+	    return $vars;
 	}
 
 	/*------------------------------------------------------------------------

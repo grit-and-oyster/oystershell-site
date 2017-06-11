@@ -53,6 +53,7 @@ class OSS_Sitename_Metaboxes {
 		$this->add_cpt_metaboxes( $this->prefix, array( 'oss_book', ) );
 
 		$this->add_options_general_metaboxes( $this->prefix );
+		$this->add_options_analytics_metaboxes( $this->prefix );
 
 		$this->add_user_metaboxes( $this->prefix, array( 'user', ) );
 	}
@@ -154,6 +155,43 @@ class OSS_Sitename_Metaboxes {
 			'name'       => __( 'Test Text', 'plugin-text-domain' ),
 			'desc'       => __( 'field description (optional)', 'plugin-text-domain' ),
 			'id'         => 'test_text',
+			'type'       => 'text',
+		) );
+
+	}
+
+	/**
+	 * Specify the metaboxes for the Analytics tab on the settings page.
+	 *
+	 * @since 	1.0.0
+	 * @param 	string    $prefix    The field name prefix for this plugin.
+	 */
+	function add_options_analytics_metaboxes( $prefix ) {
+
+		$key =  $prefix . 'options_analytics';
+
+		$cmb = new_cmb2_box( array(
+			'id'         => $key . '_metaboxes',
+			'hookup'     => false,
+			'cmb_styles' => false,
+			'show_on'    => array(
+				// These are important, don't remove
+				'key'   => 'options-page',
+				'value' => array( $key, )
+			),
+		) );
+
+		$cmb->add_field( array(
+				'name'     => __( 'Settings for Analytics', 'plugin-text-domain' ),
+				//'desc' => __( 'field description (optional)', 'myprefix' ),
+				'id'       => $prefix . '_title',
+				'type'     => 'title',
+			) );
+
+		$cmb->add_field( array(
+			'name'       => __( 'GA Tracking Code', 'plugin-text-domain' ),
+			'desc'       => __( 'Add your Google Analytics tracking code - UA-XXXXX-Y', 'plugin-text-domain' ),
+			'id'         => 'ga_code',
 			'type'       => 'text',
 		) );
 
